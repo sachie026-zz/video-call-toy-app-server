@@ -2,13 +2,13 @@ const Room = require("../models/room.model");
 const axios = require("axios");
 const constants = require("../common/constants");
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // console.log("req param", req);
   let config = {
     headers: { authorization: `Bearer ${constants.API_KEY}` },
   };
 
-  axios
+  await axios
     .post(
       constants.DAILY_ROOMS_BASE_URL,
       {
