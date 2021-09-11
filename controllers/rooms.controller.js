@@ -15,7 +15,7 @@ exports.create = (req, res) => {
     }),
   })
     .then((response) => response.json())
-    .then((res) => console.log("server res", res));
+    .then((res) => res.send(res));
 
   // const data = req.body;
   // let room = new Room({
