@@ -3,7 +3,8 @@ const axios = require("axios");
 const constants = require("../common/constants");
 
 exports.create = async (req, res) => {
-  let result = null;
+  let requestBody = req.body;
+  let data = null;
   let config = {
     headers: { authorization: `Bearer ${constants.API_KEY}` },
   };
@@ -12,35 +13,33 @@ exports.create = async (req, res) => {
     .post(
       constants.DAILY_ROOMS_BASE_URL,
       {
-        name: "test-room2",
+        name: requestBody.name,
         privacy: "public",
       },
       config
     )
     .then((response) => {
-      res.send(response.data);
+      result = response.data;
     })
     .catch((err) => res.send(err));
-  // .then((res) => {
-  //   console.log("res", res);
-  //   res.send(res);
-  // })
 
-  // const data = req.body;
-  // let room = new Room({
-  //   id: data.id,
-  //   name: data.name,
-  //   privacy: data.privacy,
-  //   url: data.url,
-  //   api_created: data.api_created,
-  //   created_at: data.created_at,
-  // });
-  // room.save(function (err) {
-  //   if (err) {
-  //     return console.error(err);
-  //   }
-  //   res.send(`Room added successfully`);
-  // });
+  // check if room created with id prop
+  if (data && data.id) {
+    let room = new Room({
+      id: data.id,
+      name: data.name,
+      privacy: data.privacy,
+      url: data.url,
+      api_created: data.api_created,
+      created_at: data.created_at,
+    });
+    room.save(function (err) {
+      if (err) {
+        return console.error(err);
+      }
+      res.send(`Room added successfully`);
+    });
+  }
 };
 
 exports.findAll = (req, res) => {
