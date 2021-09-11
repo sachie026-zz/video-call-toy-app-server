@@ -13,7 +13,8 @@
     "express-fileupload": "^1.2.0",
     "express-pino-logger": "^4.0.0",
     "http": "^0.0.1-security",
-    "mongoose": "^5.8.3"
+    "mongoose": "^5.8.3",
+    "node-fetch": "^3.0.0"
   },
   "devDependencies": {
     "node-env-run": "^3.0.2",

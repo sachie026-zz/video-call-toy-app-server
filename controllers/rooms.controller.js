@@ -1,4 +1,5 @@
 const Room = require("../models/room.model");
+const fetch = require('node-fetch');
 const constants = require("../common/constants");
 
 exports.create = (req, res) => {
@@ -11,7 +12,7 @@ exports.create = (req, res) => {
     },
     body: JSON.stringify({
       name: "test-room",
-      privacy: "private",
+      privacy: "public",
     }),
   })
     .then((response) => response.json())
