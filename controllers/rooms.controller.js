@@ -91,7 +91,7 @@ exports.updateRoom = (req, res) => {
   // );
 };
 
-exports.deleteRoom = (req, res) => {
+exports.deleteRoom = async (req, res) => {
   let data = null;
   const roomName = req.params.name;
   await axios
