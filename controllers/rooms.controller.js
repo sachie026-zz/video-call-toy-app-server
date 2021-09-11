@@ -1,22 +1,25 @@
 const Room = require("../models/room.model");
-import fetch from "node-fetch";
+const axios = require("axios");
 const constants = require("../common/constants");
 
 exports.create = (req, res) => {
-  console.log("req param", req);
-  fetch(constants.DAILY_ROOMS_BASE_URL, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${constants.API_KEY}`,
-    },
-    body: JSON.stringify({
-      name: "test-room",
-      privacy: "public",
-    }),
-  })
+  // console.log("req param", req);
+  let config = {
+    headers: { authorization: `Bearer ${constants.API_KEY}` },
+  };
+
+  axios
+    .post(
+      constants.DAILY_ROOMS_BASE_URL,
+      {
+        name: "test-room",
+        privacy: "public",
+      },
+      config
+    )
     .then((response) => response.json())
-    .then((res) => res.send(res));
+    .then((res) => res.send(res))
+    .catch((err) => res.send(err));
 
   // const data = req.body;
   // let room = new Room({
