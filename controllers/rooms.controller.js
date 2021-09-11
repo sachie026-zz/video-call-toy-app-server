@@ -12,13 +12,16 @@ exports.create = (req, res) => {
     .post(
       constants.DAILY_ROOMS_BASE_URL,
       {
-        name: "test-room",
+        name: "test-room2",
         privacy: "public",
       },
       config
     )
     .then((response) => response.json())
-    .then((res) => res.send(res))
+    .then((res) => {
+      console.log("res", res);
+      res.send(res);
+    })
     .catch((err) => res.send(err));
 
   // const data = req.body;
