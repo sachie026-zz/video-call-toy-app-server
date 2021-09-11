@@ -19,7 +19,8 @@ exports.create = async (req, res) => {
     )
     .then((response) => {
       console.log("response", response);
-      response.json();
+      console.log("response", response.data);
+      return response.json();
     })
     .then((res) => {
       console.log("res", res);
