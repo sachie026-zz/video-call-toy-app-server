@@ -1,5 +1,5 @@
 const Room = require("../models/room.model");
-const fetch = require('node-fetch');
+import fetch from "node-fetch";
 const constants = require("../common/constants");
 
 exports.create = (req, res) => {
