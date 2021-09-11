@@ -3,7 +3,7 @@ const axios = require("axios");
 const constants = require("../common/constants");
 
 exports.create = async (req, res) => {
-  // console.log("req param", req);
+  let result = null;
   let config = {
     headers: { authorization: `Bearer ${constants.API_KEY}` },
   };
@@ -18,15 +18,13 @@ exports.create = async (req, res) => {
       config
     )
     .then((response) => {
-      console.log("response", response);
-      console.log("response", response.data);
-      return response.json();
-    })
-    .then((res) => {
-      console.log("res", res);
-      res.send(res);
+      res.send(response.data);
     })
     .catch((err) => res.send(err));
+  // .then((res) => {
+  //   console.log("res", res);
+  //   res.send(res);
+  // })
 
   // const data = req.body;
   // let room = new Room({
