@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
       config
     )
     .then((response) => {
-      result = response.data;
+      data = response.data;
     })
     .catch((err) => res.send(err));
 
