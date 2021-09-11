@@ -5,9 +5,6 @@ const constants = require("../common/constants");
 exports.create = async (req, res) => {
   let requestBody = req.body;
   let data = null;
-  let config = {
-    headers: { authorization: `Bearer ${constants.API_KEY}` },
-  };
 
   await axios
     .post(
@@ -16,7 +13,7 @@ exports.create = async (req, res) => {
         name: requestBody.name,
         privacy: "public",
       },
-      config
+      constants.CONFIG
     )
     .then((response) => {
       data = response.data;
@@ -95,15 +92,30 @@ exports.updateRoom = (req, res) => {
 };
 
 exports.deleteRoom = (req, res) => {
-  Room.findByIdAndRemove({ id: req.params.roomid }, (err, room) => {
-    if (err)
-      return res
-        .status(500)
-        .send({ message: err.message || "Error occured, room not deleted" });
-    const response = {
-      message: "Room successfully deleted",
-      id: room.id,
-    };
-    return res.status(200).send(response);
-  });
+  let data = null;
+  const roomName = req.params.name;
+  await axios
+    .delete(`${constants.DAILY_ROOMS_BASE_URL}/${roomName}`, constants.CONFIG)
+    .then((response) => {
+      console.log("delete data", response);
+      data = response.data;
+    })
+    .catch((err) => res.send(err));
+  if (data) {
+    Room.findByIdAndRemove({ name: roomName }, (err, room) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ message: err.message || "Error occured, room not deleted" });
+      const response = {
+        message: "Room successfully deleted",
+        id: room.id,
+      };
+      return res.status(200).send(response);
+    });
+  } else {
+    return res.status(500).send({
+      message: err.message || "Error occured, while deleting the room",
+    });
+  }
 };

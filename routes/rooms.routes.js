@@ -7,6 +7,6 @@ const ROOMS_BASE = "/rooms";
 router.post(`${ROOMS_BASE}`, roomController.create);
 router.get(`${ROOMS_BASE}`, roomController.findAll);
 router.get(`${ROOMS_BASE}/:id`, roomController.findById);
-router.delete(`${ROOMS_BASE}/:id`, roomController.deleteRoom);
+router.delete(`${ROOMS_BASE}/:name`, roomController.deleteRoom);
 router.put(`${ROOMS_BASE}/:id`, roomController.updateRoom);
 module.exports = router;
