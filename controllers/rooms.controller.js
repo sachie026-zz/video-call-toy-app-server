@@ -17,7 +17,10 @@ exports.create = async (req, res) => {
       },
       config
     )
-    .then((response) => response.json())
+    .then((response) => {
+      console.log("response", response);
+      response.json();
+    })
     .then((res) => {
       console.log("res", res);
       res.send(res);
