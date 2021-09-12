@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const pino = require("express-pino-logger")();
-const { createProxyMiddleware } = require("http-proxy-middleware");
+const proxy = require("http-proxy-middleware");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +22,9 @@ const middleWareConfig = {
   //secure: false,
   onProxyRes: function (proxyRes, req, res) {
     proxyRes.headers["Access-Control-Allow-Origin"] = "*";
+  },
+  pathRewrite: {
+    "^/api": "/api/v1",
   },
 };
 
@@ -45,7 +48,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
 // cors(corsOptions)
-app.use("/v1/", cors(corsOptions), roomRoutes);
+app.use("/v1/", proxy(middleWareConfig), roomRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")
