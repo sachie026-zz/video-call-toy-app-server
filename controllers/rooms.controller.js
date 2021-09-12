@@ -97,12 +97,13 @@ exports.deleteRoom = async (req, res) => {
   await axios
     .delete(`${constants.DAILY_ROOMS_BASE_URL}/${roomName}`, constants.CONFIG)
     .then((response) => {
-      console.log("delete data", response);
       data = response.data;
     })
     .catch((err) => res.send(err));
-  if (data) {
-    Room.findByIdAndRemove({ name: roomName }, (err, room) => {
+
+  // check if room deleted from the daily.co
+  if (data && data.deleted) {
+    Room.deleteOne({ name: roomName }, (err, room) => {
       if (err)
         return res
           .status(500)
