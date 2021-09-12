@@ -3,14 +3,14 @@ const axios = require("axios");
 const constants = require("../common/constants");
 
 exports.create = async (req, res) => {
-  let requestBody = req.body;
+  let requestBody = req.params.name;
   let data = null;
 
   await axios
     .post(
       constants.DAILY_ROOMS_BASE_URL,
       {
-        name: requestBody.name,
+        name: requestBody,
         privacy: "public",
       },
       constants.CONFIG

@@ -45,7 +45,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
 // cors(corsOptions)
-app.use("/v1/", createProxyMiddleware(middleWareConfig), roomRoutes);
+app.use("/v1/", cors(corsOptions), roomRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")
