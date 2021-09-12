@@ -17,7 +17,7 @@ var corsOptions = {
 };
 
 const middleWareConfig = {
-  target: "http://localhost:8080/", //original url
+  target: "http://localhost:3000/", //original url
   changeOrigin: true,
   //secure: false,
   onProxyRes: function (proxyRes, req, res) {
@@ -44,7 +44,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
-app.use("/v1/", cors(corsOptions), roomRoutes);
+// cors(corsOptions)
+app.use("/v1/", createProxyMiddleware(middleWareConfig), roomRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")
