@@ -23,9 +23,6 @@ const middleWareConfig = {
   onProxyRes: function (proxyRes, req, res) {
     proxyRes.headers["Access-Control-Allow-Origin"] = "*";
   },
-  pathRewrite: {
-    "^/api": "/api/v1",
-  },
 };
 
 // Set up mongoose connection url
