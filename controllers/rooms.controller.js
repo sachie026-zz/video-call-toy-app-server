@@ -18,7 +18,10 @@ exports.create = async (req, res) => {
     .then((response) => {
       data = response.data;
     })
-    .catch((err) => res.send(err));
+    .catch((err) => {
+      res.set("Access-Control-Allow-Origin", "*");
+      res.send(err);
+    });
 
   // check if room created with id prop
   if (data && data.id) {
@@ -34,6 +37,7 @@ exports.create = async (req, res) => {
       if (err) {
         return console.error(err);
       }
+      res.set("Access-Control-Allow-Origin", "*");
       res.send(`Room added successfully`);
     });
   }
