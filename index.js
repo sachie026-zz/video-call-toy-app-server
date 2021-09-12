@@ -11,10 +11,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 app.use(cors());
 
-// var corsOptions = {
-//   origin: "http://localhost:3000",
-//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-// };
+var corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
 const middleWareConfig = {
   target: "http://localhost:8080/", //original url
@@ -44,7 +44,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
-app.use("/v1/", createProxyMiddleware(middleWareConfig), roomRoutes);
+app.use("/v1/", cors(corsOptions), roomRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")
