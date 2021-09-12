@@ -11,6 +11,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 app.use(cors());
 
+var allowlist = ["http://localhost:3000", "https://toy-web-app.herokuapp.com"];
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
+  }
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -45,7 +56,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
 // cors(corsOptions)
-app.use("/v1/", cors(corsOptions), roomRoutes);
+app.use("/v1/", cors(corsOptionsDelegate), roomRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")
