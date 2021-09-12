@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const pino = require("express-pino-logger")();
-const fs = require("fs");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,9 +11,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 app.use(cors());
 
-var corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// var corsOptions = {
+//   origin: "http://localhost:3000",
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+
+const middleWareConfig = {
+  target: "http://localhost:8080/", //original url
+  changeOrigin: true,
+  //secure: false,
+  onProxyRes: function (proxyRes, req, res) {
+    proxyRes.headers["Access-Control-Allow-Origin"] = "*";
+  },
 };
 
 // Set up mongoose connection url
@@ -35,7 +44,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
-app.use("/v1/", cors(corsOptions), roomRoutes);
+app.use("/v1/", createProxyMiddleware(middleWareConfig), roomRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")
