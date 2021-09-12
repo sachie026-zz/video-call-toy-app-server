@@ -58,7 +58,7 @@ exports.create = async (req, res) => {
         return console.error(err);
       }
       res.set("Access-Control-Allow-Origin", "*");
-      res.send(`Room added successfully`);
+      res.send(data);
     });
   }
 };
