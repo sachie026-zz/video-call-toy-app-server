@@ -10,7 +10,7 @@ let RoomSchecma = new Schema({
   api_created: { type: Boolean },
   participants: [
     {
-      type: String,
+      userid: { type: String },
     },
   ],
 });
