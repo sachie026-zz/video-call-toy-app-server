@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
 exports.findMetricsByUseridRoomname = (req, res) => {
   const userid = req.params.userid;
   const roomname = req.params.roomname;
-  Room.find({
+  Metric.find({
     userid: userid,
     roomname: roomname,
   })
