@@ -8,5 +8,8 @@ router.post(`${ROOMS_BASE}/:name`, roomController.create);
 router.get(`${ROOMS_BASE}`, roomController.findAll);
 router.get(`${ROOMS_BASE}/:id`, roomController.findById);
 router.delete(`${ROOMS_BASE}/:name`, roomController.deleteRoom);
-router.put(`${ROOMS_BASE}/:id`, roomController.updateRoom);
+router.put(
+  `${ROOMS_BASE}/participants/:roomname`,
+  roomController.updateRoomParticipants
+);
 module.exports = router;

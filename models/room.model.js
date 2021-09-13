@@ -8,6 +8,11 @@ let RoomSchecma = new Schema({
   privacy: { type: String },
   url: { type: String },
   api_created: { type: Boolean },
+  participants: [
+    {
+      type: String,
+    },
+  ],
 });
 
 // Export the model
