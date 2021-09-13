@@ -58,8 +58,7 @@ const roomRoutes = require("./routes/rooms.routes");
 app.use("/v1/", cors(corsOptionsDelegate), roomRoutes);
 
 const metricRoutes = require("./routes/metrics.routes");
-app.use("/v1/metrics", cors(corsOptionsDelegate), metricRoutes);
-
+app.use("/v1/", cors(corsOptionsDelegate), metricRoutes);
 
 app.listen(PORT, () =>
   console.log("Express server is running on localhost:5000")

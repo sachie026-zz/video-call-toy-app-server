@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const roomController = require("../controllers/metrics.controller");
-const METRICS_BASE = "/metrics";
+const metricController = require("../controllers/metrics.controller");
+const METRICS_BASE = "metrics";
 
-router.post(`/`, roomController.create);
-router.get(`/:userid/:roomname`, roomController.findMetrics);
+router.post(`${METRICS_BASE}`, metricController.create);
+router.get(
+  `${METRICS_BASE}/:userid/:roomname`,
+  metricController.findMetricsByUseridRoomname
+);
 module.exports = router;
