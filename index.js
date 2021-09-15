@@ -10,16 +10,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 app.use(cors());
 
+// Add cors handling to allow the front end app to access the server
 var allowlist = ["http://localhost:3000", "https://toy-web-app.herokuapp.com"];
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header("Origin")) !== -1) {
     corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
   } else {
-    corsOptions = { origin: false }; // disable CORS for this request
+    corsOptions = { origin: false };
   }
-  callback(null, corsOptions); // callback expects two parameters: error and options
+  callback(null, corsOptions);
 };
+
 
 // Set up mongoose connection url
 const mongoose = require("mongoose");
@@ -37,6 +39,7 @@ mongoose.Promise = global.Promise;
 
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
 
 //Adding route for different module
 const roomRoutes = require("./routes/rooms.routes");
