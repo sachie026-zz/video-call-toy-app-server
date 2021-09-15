@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const pino = require("express-pino-logger")();
-const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,20 +19,6 @@ var corsOptionsDelegate = function (req, callback) {
     corsOptions = { origin: false }; // disable CORS for this request
   }
   callback(null, corsOptions); // callback expects two parameters: error and options
-};
-
-var corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-const middleWareConfig = {
-  target: "http://localhost:3000/", //original url
-  changeOrigin: true,
-  //secure: false,
-  onProxyRes: function (proxyRes, req, res) {
-    proxyRes.headers["Access-Control-Allow-Origin"] = "*";
-  },
 };
 
 // Set up mongoose connection url
